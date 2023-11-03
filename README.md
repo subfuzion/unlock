@@ -20,5 +20,7 @@ For example:
 gkloud unlock magic
 ```
 
-This sends `magic` (and any other arguments after the `unlock` group command)
-as an HTTP POST request to the `/unlock` API.
+For more details, see:
+
+- [backend](./src/backend/README.md)
+- [gkloud](./src/gkloud/README.md)
