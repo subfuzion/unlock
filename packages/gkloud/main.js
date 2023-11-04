@@ -22,7 +22,7 @@ async function run() {
   // hack: delete default version option
   cli.options = cli.options.filter(item => item.long !== "--version");
 
-  // add version command
+  // add dedicated version command
   cli.command("version")
     .description("Print version")
     .action(() => {
@@ -34,9 +34,6 @@ async function run() {
     .description("Display information about Google Cloud events")
     .allowExcessArguments(true)
     .action(async (options, cmd) => {
-//       console.log("options:", options);
-//       console.log("args:", cmd.args);
-
       /** @type {TerminalInfo} */
       let terminfo = {
 	tty: true,
