@@ -62,7 +62,7 @@ build_sea_darwin() {
 }
 
 case "${OS}" in
-Linux*) build_sea_linux ;;
-Darwin*) build_sea_darwin ;;
-*) error "Unsupported OS:" "${OS}" ;;
+	Linux*) build_sea_linux ;;
+	Darwin*) build_sea_darwin ;;
+	*) error "Unsupported OS:" "${OS}" ;;
 esac
