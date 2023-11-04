@@ -1,0 +1,69 @@
+#!/bin/bash
+set -eu
+
+OS=$(uname -s)
+CACHE="./.cache"
+DIST="./dist"
+SEA="gkloud"
+TARGET="${DIST}/${OS}/${SEA}"
+WEBPACK_CONFIG="./webpack.config.js"
+SEA_CONFIG="./sea-config.json"
+BLOB="${CACHE}/sea-prep.blob"
+
+info() {
+    echo "INFO: " "$@"    
+}
+
+error() {
+    echo "ERROR: " "$@"
+    exit 1
+}
+
+init() {
+    mkdir -p "${CACHE}"
+    mkdir -p "${DIST}/${OS}"
+}
+
+generate_bundle() {
+  npx webpack --config "${WEBPACK_CONFIG}"
+}
+
+generate_blob() {
+    node --experimental-sea-config "${SEA_CONFIG}"
+}
+
+generate_executable() {
+    cp $(command -v node) "${TARGET}"
+}
+
+build_sea_darwin() {
+    info "Building ${OS} executable target"
+    init
+    generate_bundle
+    generate_blob
+    generate_executable
+    codesign --remove-signature "${TARGET}"
+    npx postject "${TARGET}" NODE_SEA_BLOB "${BLOB}" \
+        --sentinel-fuse NODE_SEA_FUSE_fce680ab2cc467b6e072b8b5df1996b2 \
+	--macho-segment-name NODE_SEA
+    codesign --sign - "${TARGET}"
+    info "Built executable: ${TARGET}"
+}
+
+build_sea_linux() {
+    info "Building ${OS} executable target"
+    init
+    generate_bundle
+    generate_blob
+    generate_executable
+    npx postject "${TARGET}" NODE_SEA_BLOB "${BLOB}" \
+	--sentinel-fuse NODE_SEA_FUSE_fce680ab2cc467b6e072b8b5df1996b2
+    info "Built executable: ${TARGET}"
+}
+
+case "${OS}" in
+    Linux*)	build_sea_linux;;
+    Darwin*)	build_sea_darwin;;
+    *)		error "Unsupported OS:" "${OS}"
+esac
+

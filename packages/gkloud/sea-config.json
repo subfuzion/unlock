@@ -1,0 +1,4 @@
+{
+  "main": ".cache/bundle.js",
+  "output": ".cache/sea-prep.blob"
+}
