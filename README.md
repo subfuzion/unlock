@@ -27,7 +27,7 @@ For more details, see:
 
 ## Try it out locally
 
-1 Set up
+### 1. Set up
 
 ```text
 git clone REPO
@@ -36,7 +36,7 @@ npm install
 PATH="./node_modules/.bin:$PATH"
 ```
 
-2 Start the backend
+### 2.  Start the backend
 
 Open a terminal window.
 
@@ -52,7 +52,7 @@ Start the server.
 start-unlock-api-server
 ```
 
-3 Try the CLI
+### 3. Try the CLI
 
 Open a terminal window.
 
