@@ -22,8 +22,8 @@ gkloud unlock magic
 
 For more details, see:
 
-- [backend](./src/backend/README.md)
-- [gkloud](./src/gkloud/README.md)
+- [backend](./packages/backend/README.md)
+- [gkloud](./packages/gkloud/README.md)
 
 ## Try it out locally
 
