@@ -13,11 +13,12 @@
     "rebuild": "npm run clean && npm run build"
   },
   "dependencies": {
-    "commander": "^11.1.0"
+    "commander": "11.1.0"
   },
   "devDependencies": {
-    "rimraf": "^5.0.5",
-    "webpack": "^5.89.0",
-    "webpack-cli": "^5.1.4"
+    "prettier": "3.0.3",
+    "rimraf": "5.0.5",
+    "webpack": "5.89.0",
+    "webpack-cli": "5.1.4"
   }
 }
