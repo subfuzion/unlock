@@ -6,7 +6,7 @@ module.exports = {
   entry: './bin/gkloud',
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, '.cache'),
+    path: path.resolve(__dirname, '.build'),
   },
   mode: "production",
 };
