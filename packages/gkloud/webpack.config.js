@@ -1,12 +1,12 @@
 // webpack.config.js
-const path = require('path');
+const path = require("path");
 
 module.exports = {
-  target: 'node',
-  entry: './bin/gkloud',
+  target: "node",
+  entry: "./bin/gkloud",
   output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, '.build'),
+    filename: "bundle.js",
+    path: path.resolve(__dirname, ".build"),
   },
   mode: "production",
 };

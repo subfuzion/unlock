@@ -1,7 +1,7 @@
-module.exports = {unlock}
+module.exports = { unlock };
 
 //
-// NOTES
+// TYPE NOTES
 // To minimize package dependencies, this isn't in a shared types package.
 // Keep these types manually in sync with the backend for now.
 // This is just a demo anyway; the final CLI implementation will be python.
@@ -38,7 +38,8 @@ async function unlock(request) {
   console.log("unlock request:", request);
   return new Promise((resolve) => {
     resolve({
-      code: 200, content: "Hello, world!",
-    })
+      code: 200,
+      content: "Hello, world!",
+    });
   });
 }
