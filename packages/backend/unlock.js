@@ -1,3 +1,5 @@
+const { fetchContent } = require("./content");
+
 /**
  * Terminal properties spec
  * @typedef  {Object}  TerminalInfo
@@ -27,12 +29,12 @@
  */
 async function unlock(request) {
   console.log("unlock request:", request);
-  return new Promise((resolve, reject) => {
-    resolve({
-      code: 200,
-      content: "Hello, world!",
-    });
-  });
+  const name = request.args[0];
+  const content = await fetchContent(name);
+  return {
+    code: 200,
+    content,
+  };
 }
 
 module.exports = { unlock };

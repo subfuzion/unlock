@@ -1,5 +1,5 @@
 const express = require("express");
-const { unlock } = require("./api");
+const { unlock } = require("./unlock");
 
 const app = express();
 const port = process.env.PORT || "8080";
