@@ -1,5 +1,3 @@
-module.exports = { unlock };
-
 /**
  * Terminal properties spec
  * @typedef  {Object}  TerminalInfo
@@ -29,10 +27,12 @@ module.exports = { unlock };
  */
 async function unlock(request) {
   console.log("unlock request:", request);
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     resolve({
       code: 200,
       content: "Hello, world!",
     });
   });
 }
+
+module.exports = { unlock };

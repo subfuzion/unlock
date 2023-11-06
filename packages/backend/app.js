@@ -1,4 +1,5 @@
 const express = require("express");
+const { unlock } = require("./api");
 
 const app = express();
 const port = process.env.PORT || "8080";
@@ -7,12 +8,30 @@ const port = process.env.PORT || "8080";
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.end();
+app.head("/", (req, res) => {
+  res.send();
 });
 
-app.get("/api/unlock", (req, res) => {
-  res.send("Hello World!");
+app.get("/", (req, res) => {
+  res.send();
+});
+
+app.head("/api/unlock", (req, res) => {
+  res.send();
+});
+
+app.post("/api/unlock", async (req, res) => {
+  try {
+    const result = await unlock(req.body);
+    res.send(result);
+  } catch (err) {
+    console.error(req.url, "error:", err.message);
+    // Only send 404s
+    res.status(404).send({
+      code: 404,
+      content: "service not available",
+    });
+  }
 });
 
 // Unhandled routes generate 404

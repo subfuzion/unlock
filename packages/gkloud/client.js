@@ -31,6 +31,9 @@
 class UnlockClient {
   constructor(url) {
     this.url = url;
+    let u = new URL(url);
+    u.pathname = "/api/unlock";
+    this.endpoint = u.href;
   }
 
   /**
@@ -38,13 +41,14 @@ class UnlockClient {
    * @return {Promise<UnlockResponse>}
    */
   async unlock(request) {
-    console.log("unlock request:", request);
-    return new Promise((resolve) => {
-      resolve({
-        code: 200,
-        content: "Hello, world!",
-      });
+    const response = await fetch(this.endpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(request),
     });
+    return response.json();
   }
 }
 
