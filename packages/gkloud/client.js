@@ -1,5 +1,3 @@
-module.exports = { unlock };
-
 //
 // TYPE NOTES
 // To minimize package dependencies, this isn't in a shared types package.
@@ -17,10 +15,10 @@ module.exports = { unlock };
 
 /**
  * Request spec for the unlock api
- * @typedef  {Object}              UnlockRequest
- * @property {string[]}            args     Command positional arguments
- * @property {Object.<string,any>} options  Command options map
- * @property {TerminalInfo}        terminfo Terminal information
+ * @typedef  {Object}                 UnlockRequest
+ * @property {string[]}               args     Command positional arguments
+ * @property {Object.<string,string>} options  Command options map
+ * @property {TerminalInfo}           terminfo Terminal information
  */
 
 /**
@@ -30,16 +28,24 @@ module.exports = { unlock };
  * @property {string} content Response content to display
  */
 
-/**
- * @param  {UnlockRequest} request
- * @return {Promise<UnlockResponse>}
- */
-async function unlock(request) {
-  console.log("unlock request:", request);
-  return new Promise((resolve) => {
-    resolve({
-      code: 200,
-      content: "Hello, world!",
+class UnlockClient {
+  constructor(url) {
+    this.url = url;
+  }
+
+  /**
+   * @param  {UnlockRequest} request
+   * @return {Promise<UnlockResponse>}
+   */
+  async unlock(request) {
+    console.log("unlock request:", request);
+    return new Promise((resolve) => {
+      resolve({
+        code: 200,
+        content: "Hello, world!",
+      });
     });
-  });
+  }
 }
+
+module.exports = { UnlockClient };

@@ -1,4 +1,8 @@
 #!/usr/bin/env node
 
 const {run} = require("../main.js");
-run();
+
+run().catch((reason) => {
+  console.error(reason.message ?? reason);
+  process.exit(1);
+});

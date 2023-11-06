@@ -1,10 +1,30 @@
 const { Command } = require("commander");
-
-const { unlock } = require("./client.js");
-
+const { UnlockClient } = require("./client");
 const { description, version } = require("./package.json");
 
-module.exports = { run };
+/**
+ * @param {import("commander").OptionValues} options
+ * @param {import("commander").Command} cmd
+ * @return {Promise<void>}
+ */
+async function unlockAction(options, cmd) {
+  /** @type {import("./client.js").TerminalInfo} */
+  let terminfo = {
+    tty: true,
+  };
+
+  /** @type {import("./client.js").UnlockRequest} */
+  let request = {
+    args: cmd.args,
+    options: options,
+    terminfo: terminfo,
+  };
+
+  const api = process.env.UNLOCK_URL || "http://localhost:8080";
+  const client = new UnlockClient(api)
+  let response = await client.unlock(request);
+  console.log(response.content);
+}
 
 async function run() {
   const cli = new Command();
@@ -33,22 +53,9 @@ async function run() {
     .command("unlock")
     .description("Display information about Google Cloud events")
     .allowExcessArguments(true)
-    .action(async (options, cmd) => {
-      /** @type {import("./client.js").TerminalInfo} */
-      let terminfo = {
-        tty: true,
-      };
-
-      /** @type {import("./client.js").UnlockRequest} */
-      let request = {
-        args: cmd.args,
-        options: options,
-        terminfo: terminfo,
-      };
-
-      let response = await unlock(request);
-      console.log(response);
-    });
+    .action(unlockAction);
 
   await cli.parseAsync();
 }
+
+module.exports = { run };
