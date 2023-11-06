@@ -1,4 +1,4 @@
-const fs = require('fs/promises');
+const fs = require("fs/promises");
 const path = require("path");
 
 const PATH = path.join(__dirname, "content");
@@ -11,7 +11,7 @@ const EXT = "text";
  */
 async function fetchContent(name) {
   const f = path.join(PATH, `${name}.${EXT}`);
-  const data = await fs.readFile(f, { encoding: 'utf8' });
+  const data = await fs.readFile(f, { encoding: "utf8" });
   return data;
 }
 

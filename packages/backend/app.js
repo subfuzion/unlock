@@ -45,6 +45,7 @@ app.use((req, res, next) => {
 app.use((err, req, res, next) => {
   console.error(req.method, req.url, err.status, err.message);
   res.status(err.status || 500);
+  next();
 });
 
 app.listen(port, () => {
