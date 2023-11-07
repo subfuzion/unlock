@@ -1,14 +1,5 @@
-#!/bin/sh
+#!/bin/bash
 set -eu
-
-info() {
-	echo "INFO: " "$@"
-}
-
-error() {
-	echo "ERROR: " "$@" >&2
-	exit 1
-}
 
 usage() {
 cat <<- EOF
@@ -23,14 +14,25 @@ Usage: gkloud [command]
 EOF
 }
 
-if [ "$#" == "0" ] || [ "$1" != "unlock" ]; then
+info() {
+	echo "INFO: " "$@"
+}
+
+error() {
+	echo "ERROR: " "$@" >&2
+	exit 1
+}
+
+if [[ "$#" == "0" ]] || [[ "$1" != "unlock" ]]; then
 	usage
 	exit 1
 fi
 
-IS_TTY=$(tty -s && echo "true" || echo "false")
+# terminal info
+is_tty=$(tty -s && echo "true" || echo "false")
+read -r height width < <(stty size)
 
-echo "$IS_TTY"
 
+echo "tty: $is_tty, height: $height, width: $width"
 
 
