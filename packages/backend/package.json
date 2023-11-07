@@ -6,7 +6,8 @@
   "license": "Apache-2.0",
   "scripts": {
     "start": "node app.js",
-    "lint": "eslint . --fix"
+    "lint": "eslint . --fix",
+    "deploy": "gcloud run deploy gcloud-unlock-api --allow-unauthenticated --min-instances=1 --source ."
   },
   "devDependencies": {
     "eslint": "8.53.0",
