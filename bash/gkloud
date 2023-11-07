@@ -1,0 +1,36 @@
+#!/bin/sh
+set -eu
+
+info() {
+	echo "INFO: " "$@"
+}
+
+error() {
+	echo "ERROR: " "$@" >&2
+	exit 1
+}
+
+usage() {
+cat <<- EOF
+Usage: gkloud [command]
+
+  CLI proof of concept for proposed gcloud unlock command
+
+  Commands:
+    unlock       print Google Cloud marketing easter eggs
+    help         print help for command
+
+EOF
+}
+
+if [ "$#" == "0" ] || [ "$1" != "unlock" ]; then
+	usage
+	exit 1
+fi
+
+IS_TTY=$(tty -s && echo "true" || echo "false")
+
+echo "$IS_TTY"
+
+
+

@@ -53,7 +53,7 @@ async function run() {
   // add unlock command
   cli
     .command("unlock")
-    .description("Display information about Google Cloud events")
+    .description("Display Google Cloud marketing information")
     .allowExcessArguments(true)
     .action(unlockAction);
 
