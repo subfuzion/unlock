@@ -2,6 +2,9 @@ const { Command } = require("commander");
 const { UnlockClient } = require("./client");
 const { description, version } = require("./package.json");
 
+const UnlockUrl =
+  process.env.UNLOCK_URL || "https://gcloud-unlock-api-imhauua6kq-uc.a.run.app";
+
 /**
  * @param {import("commander").OptionValues} options
  * @param {import("commander").Command} cmd
@@ -20,8 +23,7 @@ async function unlockAction(options, cmd) {
     terminfo: terminfo,
   };
 
-  const api = process.env.UNLOCK_URL || "http://localhost:8080";
-  const client = new UnlockClient(api)
+  const client = new UnlockClient(UnlockUrl);
   let response = await client.unlock(request);
   console.log(response.content);
 }
