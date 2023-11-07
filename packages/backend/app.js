@@ -26,10 +26,10 @@ app.post("/api/unlock", async (req, res) => {
     res.send(result);
   } catch (err) {
     console.error(req.url, "error:", err.message);
-    // Only send 404s
+    // Only send 404, no 500
     res.status(404).send({
       code: 404,
-      content: "service not available",
+      content: "Not found",
     });
   }
 });

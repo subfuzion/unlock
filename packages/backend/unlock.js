@@ -28,7 +28,6 @@ const { fetchContent } = require("./content");
  * @return {Promise<UnlockResponse>}
  */
 async function unlock(request) {
-  console.log("unlock request:", request);
   const name = request.args[0];
   const content = await fetchContent(name);
   return {
