@@ -1,4 +1,7 @@
-const { fetchContent } = require("./content");
+const path = require("path");
+const { FileResourceFetcher } = require("./lib/content");
+const { renderContent } = require("./lib/render");
+const Path = path.join(__dirname, "content");
 
 /**
  * Terminal properties spec
@@ -29,7 +32,11 @@ const { fetchContent } = require("./content");
  */
 async function unlock(request) {
   const name = request.args[0];
-  const content = await fetchContent(name);
+
+  renderContent(name);
+
+  const fetcher = new FileResourceFetcher(Path);
+  const content = await fetcher.fetch(name);
   return {
     code: 200,
     content,

@@ -1,7 +1,8 @@
 {
-  "args": ["foo"],
+  "args": ["sphere"],
   "terminfo": {
     "istty": true,
     "width": 182,
-    "height": 81 }
+    "height": 81
+  }
 }

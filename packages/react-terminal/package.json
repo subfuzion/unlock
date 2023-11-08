@@ -1,0 +1,33 @@
+{
+  "name": "react-terminal",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Render react templates to the terminal",
+  "license": "Apache-2.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "prettier --check .",
+    "fix": "prettier --write ."
+  },
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "ink": "4.4.1",
+    "react": "18.2.0"
+  },
+  "devDependencies": {
+    "@sindresorhus/tsconfig": "5.0.0",
+    "@types/react": "18.2.37",
+    "chalk": "5.3.0",
+    "eslint-config-xo-react": "0.27.0",
+    "eslint-plugin-react": "7.33.2",
+    "eslint-plugin-react-hooks": "4.6.0",
+    "prettier": "3.0.3",
+    "ts-node": "10.9.1",
+    "typescript": "5.2.2"
+  }
+}

@@ -8,8 +8,14 @@ dist/gkloud.zip: .build/bundle.js
 	@mv .build/gkloud.zip dist/
 	@echo dist/gkloud.zip
 
+.build/bundle.js: $(shell find *.js)
+	@echo "$@"
+	@webpack --config webpack.config.js
+	@touch .build/bundle.js
+	@echo .build/bundle.js
+
 clean:
-	@rm dist/gkloud.zip
+	@rm -rf dist/gkloud.zip
 
 upload: dist/gkloud.zip
 	@gcloud storage cp dist/gkloud.zip gs://gkloud-cli 2>/dev/null

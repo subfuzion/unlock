@@ -12,7 +12,8 @@
     "bundle": "webpack --config webpack.config.js",
     "clean": "rimraf .build dist",
     "rebuild": "npm run clean && npm run build",
-    "lint": "eslint . --fix"
+    "test": "prettier --check .",
+    "fix": "prettier --write ."
   },
   "dependencies": {
     "commander": "11.1.0"
