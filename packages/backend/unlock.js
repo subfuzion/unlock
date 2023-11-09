@@ -1,7 +1,4 @@
-const path = require("path");
-const { FileResourceFetcher } = require("./lib/content");
-const { renderContent } = require("./lib/render");
-const Path = path.join(__dirname, "content");
+import { FileReader, parse, render } from "terminal-markdown";
 
 /**
  * Terminal properties spec
@@ -30,17 +27,21 @@ const Path = path.join(__dirname, "content");
  * @param  {UnlockRequest} request
  * @return {Promise<UnlockResponse>}
  */
-async function unlock(request) {
+export async function unlock(request) {
   const name = request.args[0];
 
-  renderContent(name);
+  const dir = new URL("content", import.meta.url);
+  const reader = new FileReader(dir);
+  const doc = await reader.readFileExt(name, "md");
+  const ast = parse(doc);
+  const result = render(ast);
 
-  const fetcher = new FileResourceFetcher(Path);
-  const content = await fetcher.fetch(name);
-  return {
-    code: 200,
-    content,
-  };
+  if (result.ok) {
+    return {
+      code: 200,
+      content: result.content,
+    };
+  } else {
+    throw new Error(result.reason);
+  }
 }
-
-module.exports = { unlock };

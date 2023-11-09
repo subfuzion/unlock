@@ -1,0 +1,14 @@
+#!/bin/sh
+
+TEST=$1
+if [ -z "${TEST}" ]; then
+  echo "Usage: $(basename $0) TEST"
+  exit 1
+fi
+if [ $(ls ${TEST}.* 2>/dev/null | wc -l) != 0 ]; then
+  echo "Files already exist: \n$(ls ${TEST}.*)"
+  exit 1
+fi
+
+touch "${TEST}.md" "${TEST}.term"
+echo "${TEST}.md" "${TEST}.term"

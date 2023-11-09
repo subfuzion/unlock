@@ -1,7 +1,10 @@
 {
   "extends": "@sindresorhus/tsconfig",
   "compilerOptions": {
-    "outDir": "dist"
+    "outDir": "dist",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "esModuleInterop": true
   },
-  "include": ["source"]
+  "include": ["src"]
 }

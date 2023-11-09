@@ -1,5 +1,5 @@
-const express = require("express");
-const { unlock } = require("./unlock");
+import express from "express";
+import { unlock } from "./unlock.js";
 
 const app = express();
 const port = process.env.PORT || "8080";
@@ -48,6 +48,16 @@ app.use((err, req, res, next) => {
   next();
 });
 
-app.listen(port, () => {
-  console.log(`Listening on http://localhost:${port}/`);
+const server = app.listen(port, () => {
+  console.log(`Listening on http://localhost:${server.address().port}/`);
+});
+
+function handleSignal(signal) {
+  console.log(`Received ${signal}`);
+  process.exit(0);
+}
+
+process.on("SIGINT", handleSignal);
+["SIGTERM", "SIGINT"].forEach((signal) => {
+  process.on(signal, handleSignal);
 });

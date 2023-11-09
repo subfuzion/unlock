@@ -1,0 +1,41 @@
+{
+  "include": ["src/**/*", "test/**/*"],
+  "exclude": ["node_modules", "dist"],
+  "compilerOptions": {
+    "target": "es2017",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "esModuleInterop": true,
+    "rootDir": "./",
+    "outDir": "./dist",
+    "noEmitOnError": true,
+    "declaration": true,
+    "declarationDir": "./types",
+    "declarationMap": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictPropertyInitialization": true,
+    "noImplicitThis": true,
+    "useUnknownInCatchVariables": true,
+    "alwaysStrict": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true
+    // "noUnusedLocals": true,
+    // "noUnusedParameters": true
+  },
+  "ts-node": {
+    "esm": true,
+    "include": ["src/**/*", "test/**/*"],
+    "compilerOptions": {
+      "rootDir": "./test",
+      "allowImportingTsExtensions": true,
+      "noEmit": true
+    }
+  }
+}

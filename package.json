@@ -4,6 +4,7 @@
   "workspaces": [
     "packages/backend",
     "packages/gkloud",
-    "packages/react-terminal"
+    "packages/react-terminal",
+    "packages/terminal-markdown"
   ]
 }

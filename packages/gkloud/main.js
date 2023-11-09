@@ -3,7 +3,7 @@ const { UnlockClient } = require("./client");
 const { description, version } = require("./package.json");
 
 const UnlockUrl =
-  process.env.UNLOCK_URL || "https://gcloud-unlock-api-imhauua6kq-uc.a.run.app";
+  process.env.UNLOCK_URL || "https://gcloud-unlock-api-gsaaz6raqa-uc.a.run.app";
 
 /**
  * @param {import("commander").OptionValues} options
@@ -23,9 +23,14 @@ async function unlockAction(options, cmd) {
     terminfo: terminfo,
   };
 
-  const client = new UnlockClient(UnlockUrl);
-  let response = await client.unlock(request);
-  console.log(response.content);
+  try {
+    console.log(UnlockUrl);
+    const client = new UnlockClient(UnlockUrl);
+    let response = await client.unlock(request);
+    console.log(response.content);
+  } catch (err) {
+    console.error("Service unavailable");
+  }
 }
 
 async function run() {

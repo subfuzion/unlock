@@ -4,21 +4,24 @@
   "private": true,
   "description": "API to demonstrate generating terminal content",
   "license": "Apache-2.0",
+  "type": "module",
   "scripts": {
     "start": "node app.js",
-    "test": "prettier --check .",
+    "test": "prettier --check",
     "fix": "prettier --write .",
-    "deploy": "gcloud run deploy gcloud-unlock-api --allow-unauthenticated --min-instances=1 --source ."
+    "deploy": "gcloud run deploy gcloud-unlock-api --allow-unauthenticated --min-instances=1 --source .",
+    "watch": "UNLOCK_URL=http://localhost:8080 nodemon || true"
+  },
+  "dependencies": {
+    "express": "4.18.2",
+    "ink": "4.4.1",
+    "terminal-markdown": "0.1.0"
   },
   "devDependencies": {
     "eslint": "8.53.0",
     "eslint-config-prettier": "9.0.0",
     "eslint-plugin-prettier": "5.0.1",
+    "nodemon": "3.0.1",
     "prettier": "3.0.3"
-  },
-  "dependencies": {
-    "express": "4.18.2",
-    "ink": "^4.4.1",
-    "react": "^18.2.0"
   }
 }

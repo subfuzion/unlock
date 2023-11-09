@@ -1,0 +1,1 @@
+{"version":3,"file":"reader.d.ts","sourceRoot":"","sources":["../../src/reader.ts"],"names":[],"mappings":"AAGA,qBAAa,UAAU;IACrB,GAAG,EAAE,GAAG,CAAC;gBAEG,GAAG,EAAE,GAAG;IAGd,WAAW,CAAC,IAAI,EAAE,MAAM,EAAE,GAAG,EAAE,MAAM,GAAG,OAAO,CAAC,MAAM,CAAC;WAehD,QAAQ,CAAC,IAAI,EAAE,GAAG,GAAG,MAAM,GAAG,OAAO,CAAC,MAAM,CAAC;CAK3D"}
