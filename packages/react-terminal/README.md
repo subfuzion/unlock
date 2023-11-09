@@ -23,3 +23,7 @@ $ gkloud --help
     $ gkloud --name=Jane
     Hello, Jane
 ```
+
+## License
+
+Apache 2.0; see [LICENSE](LICENSE) for details.

@@ -67,3 +67,7 @@ Enter a CLI command.
 ```text
 gkloud unlock sphere
 ```
+
+## License
+
+Apache 2.0; see [LICENSE](LICENSE) for details.

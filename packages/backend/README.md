@@ -9,3 +9,7 @@ The API is hosted by the server at `/api/unlock`.
 | ----- | -------------------------- | -------------------------------- |
 | `GET` | `/api/unlock/`             | Get list of campaign/event names |
 | `GET` | `/api/unlock/:name/?args+` | Get pre-rendered terminal text   |
+
+## License
+
+Apache 2.0; see [LICENSE](LICENSE) for details.
