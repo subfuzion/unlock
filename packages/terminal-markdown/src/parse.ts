@@ -199,6 +199,12 @@ export function render(ast: Nodes, context?: Context): RenderResult {
         chunks.push(")");
         break;
 
+      case "image":
+        chunks.push(`image: ${node.alt}\n`);
+        chunks.push(node.url);
+        chunks.push("\n\n");
+        break;
+
       default:
         result.addError(node, `Unhandled type: ${node.type}`);
     }
