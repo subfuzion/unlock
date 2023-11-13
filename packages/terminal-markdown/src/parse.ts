@@ -190,6 +190,15 @@ export function render(ast: Nodes, context?: Context): RenderResult {
         blockListItem(node, parent as List, context);
         break;
 
+      case "link":
+        for (const child of node.children) {
+          visit(child, node);
+        }
+        chunks.push(" (");
+        chunks.push(node.url);
+        chunks.push(")");
+        break;
+
       default:
         result.addError(node, `Unhandled type: ${node.type}`);
     }
