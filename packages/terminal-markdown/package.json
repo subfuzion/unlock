@@ -48,13 +48,11 @@
     "typescript": "5.2.2"
   },
   "dependencies": {
-    "mdast": "3.0.0",
+    "ascii-art-image": "1.4.0",
     "remark": "15.0.1",
     "remark-frontmatter": "5.0.0",
     "remark-gfm": "4.0.0",
     "remark-parse": "11.0.0",
-    "unified": "11.0.4",
-    "unist-util-visit": "5.0.0",
     "yaml": "2.3.4"
   }
 }
