@@ -1,4 +1,4 @@
-import { FileReader, parse, render } from "terminal-md";
+import { FileReader, parse, render } from "@subfuzion/terminal-md";
 
 /**
  * Terminal properties spec
