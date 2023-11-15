@@ -5,7 +5,10 @@
     "packages/backend",
     "packages/gkloud",
     "packages/react-terminal",
-    "packages/terminal-markdown"
+    "packages/terminal-md"
   ],
-  "version": "0.1.0-preview.5"
+  "version": "0.1.0-preview.11",
+  "scripts": {
+    "bump-preview": "npm version prerelease --preid preview --workspaces"
+  }
 }

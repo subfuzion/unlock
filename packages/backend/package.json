@@ -1,6 +1,6 @@
 {
   "name": "gcloud-unlock-api",
-  "version": "0.1.0-preview.5",
+  "version": "0.1.0-preview.11",
   "private": true,
   "description": "API to demonstrate generating terminal content",
   "license": "Apache-2.0",
@@ -13,7 +13,7 @@
     "watch": "UNLOCK_URL=http://localhost:8080 nodemon || true"
   },
   "dependencies": {
-    "@subfuzion/terminal-md": "0.1.0-preview.5",
+    "@subfuzion/terminal-md": "0.1.0-preview.11",
     "express": "4.18.2",
     "ink": "4.4.1"
   },

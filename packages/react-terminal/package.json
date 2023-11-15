@@ -1,6 +1,6 @@
 {
   "name": "react-terminal",
-  "version": "0.1.0-preview.5",
+  "version": "0.1.0-preview.11",
   "license": "Apache-2.0",
   "description": "Render react templates to the terminal",
   "private": true,
