@@ -6,5 +6,6 @@
     "packages/gkloud",
     "packages/react-terminal",
     "packages/terminal-markdown"
-  ]
+  ],
+  "version": "0.1.0-preview.1"
 }
