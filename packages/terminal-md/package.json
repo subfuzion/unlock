@@ -1,7 +1,7 @@
 {
-  "name": "terminal-markdown",
+  "name": "@subfuzion/terminal-md",
   "description": "Render markdown for terminals",
-  "version": "0.1.0-preview.1",
+  "version": "0.1.0-preview.5",
   "license": "Apache-2.0",
   "type": "module",
   "main": "./dist/index.js",

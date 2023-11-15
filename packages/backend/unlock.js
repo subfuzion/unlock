@@ -1,4 +1,4 @@
-import { FileReader, parse, render } from "terminal-markdown";
+import { FileReader, parse, render } from "terminal-md";
 
 /**
  * Terminal properties spec
