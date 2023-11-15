@@ -1,6 +1,6 @@
 {
   "name": "gcloud-unlock-api",
-  "version": "0.1.0",
+  "version": "0.1.0-preview.1",
   "private": true,
   "description": "API to demonstrate generating terminal content",
   "license": "Apache-2.0",
@@ -15,7 +15,7 @@
   "dependencies": {
     "express": "4.18.2",
     "ink": "4.4.1",
-    "terminal-markdown": "0.1.0"
+    "terminal-markdown": "0.1.0-preview.1"
   },
   "devDependencies": {
     "eslint": "8.53.0",
