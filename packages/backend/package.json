@@ -7,7 +7,7 @@
   "type": "module",
   "scripts": {
     "start": "node app.js",
-    "test": "prettier --check",
+    "test": "prettier --check .",
     "fix": "prettier --write .",
     "deploy": "gcloud run deploy gcloud-unlock-api --allow-unauthenticated --min-instances=1 --source .",
     "watch": "UNLOCK_URL=http://localhost:8080 nodemon || true"
