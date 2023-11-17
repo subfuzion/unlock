@@ -22,9 +22,11 @@ export class FileReader {
     }
   }
 
-  static async readFile(name: URL | string): Promise<string> {
+  static async readFile(
+    name: URL | string,
+    trimTrailing: boolean = false,
+  ): Promise<string> {
     const content = await readFile(name, { encoding: "utf8" });
-    // Only trim trailing whitespace
-    return content.trimEnd();
+    return trimTrailing ? content.trimEnd() : content;
   }
 }
