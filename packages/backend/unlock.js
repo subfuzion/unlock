@@ -29,7 +29,41 @@ import { FileReader, parse, render } from "@subfuzion/terminal-md";
  */
 export async function unlock(request) {
   const name = request.args[0];
+  let contentType = "ascii";
 
+  // TODO: placeholder until we can look this up
+  const contentMap = new Map();
+  contentMap.set("sphere", "ascii");
+
+  if (contentMap.has(name)) {
+    contentType = contentMap.get(name);
+  }
+
+  const content = await getContent(name, contentType);
+  return {
+    code: 200,
+    content: content,
+  }
+}
+
+/**
+ * Fetches the named content.
+ * @param  {string} name Content name. For now, a file name minus ext.
+ * @param  {string} contentType Content type. For now, a file ext.
+ * @return {Promise<string>} The requested content.
+ */
+async function getContent(name, contentType) {
+  switch (contentType) {
+    case "md":
+      return getMarkdown(name);
+    case "ascii":
+      return getAscii(name);
+    default:
+      throw new Error(`Unsupported content type: ${contentType}`);
+  }
+}
+
+async function getMarkdown(name) {
   const dir = new URL("content", import.meta.url);
   const reader = new FileReader(dir);
   const doc = await reader.readFileExt(name, "md");
@@ -37,11 +71,14 @@ export async function unlock(request) {
   const result = render(ast);
 
   if (result.ok) {
-    return {
-      code: 200,
-      content: result.content,
-    };
+    return result.content;
   } else {
     throw new Error(result.reason);
   }
+}
+
+async function getAscii(name) {
+  const dir = new URL("content", import.meta.url);
+  const reader = new FileReader(dir);
+  return reader.readFileExt(name, "ascii");
 }
