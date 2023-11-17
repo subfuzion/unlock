@@ -1,2 +1,3 @@
-#curl -d @request.json -X POST $UNLOCK_URL/api/unlock -H "Content-Type: application/json"
+#!/bin/sh
+# curl -d @request.json -X POST $UNLOCK_URL/api/unlock -H "Content-Type: application/json"
 curl -d '{"args":["sphere"]}' -X POST $UNLOCK_URL/api/unlock -H "Content-Type: application/json"

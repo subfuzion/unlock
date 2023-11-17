@@ -1,7 +1,7 @@
 {
   "name": "@subfuzion/terminal-md",
   "description": "Render markdown for terminals",
-  "version": "0.1.0-preview.12",
+  "version": "0.1.0-preview.13",
   "license": "Apache-2.0",
   "type": "module",
   "main": "./dist/index.js",
@@ -48,10 +48,8 @@
     "typescript": "5.2.2"
   },
   "dependencies": {
-    "@colors/colors": "^1.6.0",
-    "ascii-art-image": "1.4.0",
-    "exact": "^0.8.0",
-    "figlet": "^1.7.0",
+    "@colors/colors": "1.6.0",
+    "figlet": "1.7.0",
     "remark": "15.0.1",
     "remark-frontmatter": "5.0.0",
     "remark-gfm": "4.0.0",
