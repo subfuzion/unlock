@@ -43,7 +43,7 @@ export async function unlock(request) {
   return {
     code: 200,
     content: content,
-  }
+  };
 }
 
 /**

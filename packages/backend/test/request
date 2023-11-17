@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# test using request.json
+# curl -d @request.json -X POST $UNLOCK_URL/api/unlock -H "Content-Type: application/json"
+
+# check if defined in the environment
+UNLOCK_URL=$UNLOCK_URL
+
+# check if supplied as an argument
+if [ ! -z "$1" ]; then
+  UNLOCK_URL="$1" 
+fi
+
+if [ ! -z "$UNLOCK_URL" ]; then
+  UNLOCK_URL="https://gcloud-unlock-api-gsaaz6raqa-uc.a.run.app"
+fi
+
+ENDPOINT="${UNLOCK_URL}/api/unlock"
+
+curl -d '{"args":["sphere"]}' -X POST $ENDPOINT -H "Content-Type: application/json"

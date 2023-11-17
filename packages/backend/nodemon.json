@@ -1,5 +1,5 @@
 {
   "events": {
-    "start": "sleep 1 && gkloud unlock sphere"
+    "start": "sleep 1 && node test/test.js http://localhost:8080"
   }
 }

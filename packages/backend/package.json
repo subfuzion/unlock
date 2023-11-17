@@ -7,10 +7,10 @@
   "type": "module",
   "scripts": {
     "start": "node app.js",
-    "test": "prettier --check .",
+    "test": "prettier --check . && node test/test.js http://localhost:8080",
     "fix": "prettier --write .",
     "deploy": "gcloud run deploy gcloud-unlock-api --allow-unauthenticated --timeout=30 --min-instances=1 --source .",
-    "watch": "UNLOCK_URL=http://localhost:8080 nodemon || true"
+    "watch": "nodemon || true"
   },
   "dependencies": {
     "@subfuzion/terminal-md": "0.1.0-preview.13",
