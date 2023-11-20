@@ -1,3 +1,4 @@
+import { ChalkInstance } from "chalk";
 import figlet from "figlet";
 export declare const DefaultOptions: figlet.Options;
 /**
@@ -32,7 +33,7 @@ export declare class Figlet {
      * @return {Promise<string>}
      */
     center(s: string): Promise<string>;
-    private splitFigletString;
+    static splitFigletString(s: string, delim?: string): string[];
     /**
      * Returns a copy of rows with centered lines.
      * @param {string[]} rows
@@ -42,5 +43,20 @@ export declare class Figlet {
      */
     private centerFigletLine;
     static rainbowFilter(s: string): string;
+}
+export type AnsiStyle = "bold" | "dim" | "italic" | "underline" | "inverse" | "hidden" | "strikethrough";
+export type AnsiIndexColor = number;
+export declare class TerminalText {
+    str: string;
+    chalk: ChalkInstance;
+    private constructor();
+    static ansi256(char: string, chalk: ChalkInstance, color?: AnsiIndexColor): TerminalText;
+    static bgAnsi256(char: string, chalk: ChalkInstance, color?: AnsiIndexColor): TerminalText;
+    static createChalk256(): ChalkInstance;
+    static initFigletFont(font?: figlet.Fonts, width?: number): Promise<Figlet>;
+    render(filter?: (s: string, chalk: ChalkInstance) => string): string;
+    renderRainbow(): string;
+    static renderFiglet(text: string[], figlet: Figlet): Promise<string>;
+    static rainbow256(str: string, chalk: ChalkInstance): string;
 }
 //# sourceMappingURL=text.d.ts.map

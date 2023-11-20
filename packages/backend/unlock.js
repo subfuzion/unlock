@@ -1,7 +1,12 @@
-import { Figlet, FileReader, parse, render } from "@subfuzion/terminal-md";
+import {
+  Figlet,
+  FileReader,
+  parse,
+  render,
+  TerminalText,
+} from "@subfuzion/terminal-md";
 import { Chalk } from "chalk";
 import gradient from "gradient-string";
-import { stdout } from "node:process";
 
 /**
  * Terminal properties spec
@@ -113,38 +118,118 @@ export const unlock = new Unlock();
  * @param {UnlockHandler} req
  */
 unlock.register("sphere", async (req) => {
-  const options = {
-    font: "Isometric3",
-    horizontalLayout: "default",
-    verticalLayout: "default",
-    width: req.terminfo.width || 120,
-    whitespaceBreak: true,
-  };
-
-  const f = new Figlet(options);
-  await f.init();
+  const width = req.terminfo.width || 120;
+  const chalk = TerminalText.createChalk256();
+  const figlet = await TerminalText.initFigletFont("Isometric3", width);
+  const filter = rainbow256;
+  const rainbow = rainbow256;
 
   const lines = [" The new", "way to", "  Cloud"];
 
-  let chalk;
-  let filter;
-  let rainbow;
-  if (req.options && req.options.color && req.options.color === "millions") {
-    chalk = new Chalk({ level: 3 });
-    filter = Figlet.rainbowFilter;
-    rainbow = gradient.rainbow;
-  } else {
-    // assume "256"
-    chalk = new Chalk({ level: 2 });
-    filter = rainbow256;
-    rainbow = rainbow256;
-  }
-
-  const content = await f.render(lines, filter);
-
   // const white = chalk.whiteBright;
   const gray = chalk.gray;
-  const blue = chalk.blueBright;
+  const blue = chalk.ansi256(69); // chalk.blueBright // CornflowerBlue
+  const red = chalk.ansi256(9); // Red (SYSTEM)
+  const yellow = chalk.ansi256(220); // Gold1
+  const green = chalk.ansi256(34); // Green3
+
+  // rainbow banner: [" The new", "way to", "  Cloud"];
+  const banner = [
+    [
+      {
+        text: " T",
+        color: red,
+      },
+      {
+        text: "h",
+        color: blue,
+      },
+      {
+        text: "e",
+        color: yellow,
+      },
+      {
+        text: " N",
+        color: green,
+      },
+      {
+        text: "e",
+        color: blue,
+      },
+      {
+        text: "w",
+        color: red,
+      },
+    ],
+    [
+      {
+        text: "w",
+        color: yellow,
+      },
+      {
+        text: "a",
+        color: green,
+      },
+      {
+        text: "y",
+        color: blue,
+      },
+      {
+        text: " t",
+        color: yellow,
+      },
+      {
+        text: "o",
+        color: red,
+      },
+    ],
+    [
+      {
+        text: "  C",
+        color: blue,
+      },
+      {
+        text: "l",
+        color: red,
+      },
+      {
+        text: "o",
+        color: green,
+      },
+      {
+        text: "u",
+        color: yellow,
+      },
+      {
+        text: "d",
+        color: blue,
+      },
+    ],
+  ];
+
+  const renderBanner = async (banner) => {
+    const joinedLines = [];
+    for (const line of banner) {
+      // An array of line segment arrays (basically an array of character cells)
+      let renderedSegments = [];
+      for (const segment of line) {
+        const text = segment.text;
+        const color = segment.color;
+
+        let block = await TerminalText.renderFiglet(text, figlet);
+        if (color) {
+          block = color(block);
+        }
+        let rendered = Figlet.splitFigletString(block);
+        renderedSegments.push(rendered);
+      }
+      const joinedLine = joinSegments(renderedSegments).join("\n");
+      joinedLines.push(joinedLine);
+    }
+    return joinedLines.join("\n");
+  };
+
+  const content = await renderBanner(banner);
 
   const more = [
     "\n\n\n",
@@ -154,20 +239,19 @@ unlock.register("sphere", async (req) => {
     "Visit " +
       blue("g.co/cloud/next") +
       " and use registration code " +
-      rainbow("next100_dh1000\n"),
+      rainbow("buildwhatsnext\n", chalk),
     "to snag a $499 ticket\n",
     "\n",
     gray("*\n"),
-    gray("The $499 price is only valid with code next100_dh1000\n"),
+    gray("The $499 price is only valid with code buildwhatsnext\n"),
     gray("through 11:59 pm PT on December 31, 2023, or until sold out.\n"),
   ];
 
   return content + more.join("");
 });
 
-// https://ss64.com/bash/syntax-colors.html
-function rainbow256(s) {
-  const chalk = new Chalk({ level: 2 });
+function rainbow256(s, chalk) {
+  // https://ss64.com/bash/syntax-colors.html
   const red = 9; // Red (SYSTEM)
   const yellow = 220; // Gold1
   const blue = 69; // CornflowerBlue
@@ -180,8 +264,26 @@ function rainbow256(s) {
     .split("")
     .map((c, i) => {
       const color = colors[i % nColors];
-      // return chalk[color](c);
       return chalk.ansi256(color)(c);
     })
     .join("");
+}
+/**
+ *
+ * @param {string[][]} segments
+ * @returns {string[]}
+ */
+function joinSegments(segments) {
+  const joined = [];
+
+  for (const segment of segments) {
+    for (let row = 0; row < segment.length; row++) {
+      const line = segment[row];
+      if (!joined[row]) {
+        joined[row] = "";
+      }
+      joined[row] += line;
+    }
+  }
+  return joined;
 }

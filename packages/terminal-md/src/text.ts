@@ -1,3 +1,4 @@
+import { Chalk, ChalkInstance } from "chalk";
 import figlet from "figlet";
 import gradient from "gradient-string";
 import { stdout } from "node:process";
@@ -6,7 +7,7 @@ export const DefaultOptions: figlet.Options = {
   font: "Isometric3",
   horizontalLayout: "default",
   verticalLayout: "default",
-  width: stdout.columns || 80,
+  width: stdout.columns || 120,
   whitespaceBreak: true,
 };
 
@@ -21,7 +22,7 @@ export const DefaultOptions: figlet.Options = {
  */
 export class Figlet {
   #options: figlet.Options;
-  #height: number = -1;
+  #height?: number;
 
   constructor(options: figlet.Options = DefaultOptions) {
     this.#options = options;
@@ -29,14 +30,17 @@ export class Figlet {
 
   async init(): Promise<void> {
     await new Promise<void>((resolve, reject) => {
-      figlet.loadFont(this.font, (err: any, fontOptions: any) => {
-        if (err) {
-          reject(err);
-        } else {
-          this.#height = fontOptions.height;
-          resolve();
-        }
-      });
+      figlet.loadFont(
+        this.font,
+        (err: any, fontOptions?: figlet.FontOptions) => {
+          if (err) {
+            reject(err);
+          } else {
+            this.#height = fontOptions?.height;
+            resolve();
+          }
+        },
+      );
     });
   }
 
@@ -48,7 +52,7 @@ export class Figlet {
   }
 
   get height(): number {
-    if (this.#height < 0) {
+    if (!this.#height) {
       throw new Error("can't read height before calling init()");
     }
     return this.#height;
@@ -103,7 +107,7 @@ export class Figlet {
     const content = await this.render(s);
 
     // Split the formatted string into an array of separate padded rows
-    const rows = this.splitFigletString(content);
+    const rows = Figlet.splitFigletString(content);
 
     // Divide the rows into logical lines of text based on the font height
     // and center each line
@@ -117,7 +121,7 @@ export class Figlet {
     return centeredRows.join("\n");
   }
 
-  private splitFigletString(s: string, delim: string = "\n"): string[] {
+  static splitFigletString(s: string, delim: string = "\n"): string[] {
     const lines: string[] = [];
     let buf = "";
     for (const c of s) {
@@ -162,5 +166,96 @@ export class Figlet {
 
   static rainbowFilter(s: string): string {
     return gradient.rainbow.multiline(s);
+  }
+}
+
+export type AnsiStyle =
+  | "bold"
+  | "dim"
+  | "italic"
+  | "underline"
+  | "inverse"
+  | "hidden"
+  | "strikethrough";
+export type AnsiIndexColor = number;
+
+export class TerminalText {
+  str: string;
+  chalk: ChalkInstance;
+
+  private constructor(char: string, chalk: ChalkInstance) {
+    this.str = char;
+    this.chalk = chalk;
+  }
+
+  static ansi256(
+    char: string,
+    chalk: ChalkInstance,
+    color: AnsiIndexColor = -1,
+  ): TerminalText {
+    if (color > -1) {
+      chalk = chalk.ansi256(color);
+    }
+    return new TerminalText(char, chalk);
+  }
+
+  static bgAnsi256(
+    char: string,
+    chalk: ChalkInstance,
+    color: AnsiIndexColor = -1,
+  ): TerminalText {
+    if (color > -1) {
+      chalk = chalk.bgAnsi256(color);
+    }
+    return new TerminalText(char, chalk);
+  }
+
+  static createChalk256(): ChalkInstance {
+    return new Chalk({ level: 2 });
+  }
+
+  static async initFigletFont(
+    font?: figlet.Fonts,
+    width: number = 120,
+  ): Promise<Figlet> {
+    const options = { ...DefaultOptions, font: font, width: width };
+    const figlet = new Figlet(options);
+    await figlet.init();
+    return figlet;
+  }
+
+  render(filter?: (s: string, chalk: ChalkInstance) => string) {
+    return filter ? filter(this.str, this.chalk) : this.chalk(this.str);
+  }
+
+  renderRainbow(): string {
+    return this.render(TerminalText.rainbow256);
+  }
+
+  static async renderFiglet(text: string[], figlet: Figlet): Promise<string> {
+    return figlet.render(text);
+  }
+
+  // https://ss64.com/bash/syntax-colors.html
+  static rainbow256(str: string, chalk: ChalkInstance): string {
+    if (chalk.level !== 2)
+      throw new Error("chalk level must be 2 for 256 colors");
+
+    const red = 9; // Red (SYSTEM)
+    const yellow = 220; // Gold1
+    const blue = 69; // CornflowerBlue
+    const green = 34; // Green3
+
+    const colors = [red, yellow, green, blue];
+    const nColors = colors.length;
+
+    return str
+      .split("")
+      .map((c, i) => {
+        const color = colors[i % nColors];
+        // return chalk[color](c);
+        return chalk.ansi256(color!)(c);
+      })
+      .join("");
   }
 }

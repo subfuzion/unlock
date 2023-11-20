@@ -1,7 +1,7 @@
 {
   "name": "@subfuzion/terminal-md",
   "description": "Render markdown for terminals",
-  "version": "0.1.0-preview.14",
+  "version": "0.1.0-preview.15",
   "license": "Apache-2.0",
   "type": "module",
   "main": "./dist/index.js",
@@ -28,7 +28,7 @@
   "scripts": {
     "clean": "rimraf dist",
     "check": "prettier --check .",
-    "prebuild": "npm run check",
+    "prebuild": "npm run check && npm run clean",
     "build": "tsc",
     "watch": "tsc --watch",
     "lint": "eslint .",
@@ -50,6 +50,7 @@
     "typescript": "5.2.2"
   },
   "dependencies": {
+    "chalk": "5.3.0",
     "figlet": "1.7.0",
     "gradient-string": "2.0.2",
     "remark": "15.0.1",
