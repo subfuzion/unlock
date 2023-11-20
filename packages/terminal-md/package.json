@@ -1,7 +1,7 @@
 {
   "name": "@subfuzion/terminal-md",
   "description": "Render markdown for terminals",
-  "version": "0.1.0-preview.13",
+  "version": "0.1.0",
   "license": "Apache-2.0",
   "type": "module",
   "main": "./dist/index.js",
@@ -37,6 +37,8 @@
     "test:watch": "node --watch --no-warnings=ExperimentalWarning --loader ts-node/esm test/test.ts"
   },
   "devDependencies": {
+    "@types/figlet": "1.5.8",
+    "@types/gradient-string": "1.1.5",
     "@types/mdast": "4.0.3",
     "@types/node": "20.9.0",
     "eslint": "8.53.0",
@@ -48,8 +50,8 @@
     "typescript": "5.2.2"
   },
   "dependencies": {
-    "@colors/colors": "1.6.0",
     "figlet": "1.7.0",
+    "gradient-string": "2.0.2",
     "remark": "15.0.1",
     "remark-frontmatter": "5.0.0",
     "remark-gfm": "4.0.0",
