@@ -1,6 +1,7 @@
 import { Figlet, FileReader, parse, render } from "@subfuzion/terminal-md";
-import chalk from "chalk";
+import { Chalk } from "chalk";
 import gradient from "gradient-string";
+import { stdout } from "node:process";
 
 /**
  * Terminal properties spec
@@ -112,18 +113,29 @@ export const unlock = new Unlock();
  * @param {UnlockHandler} req
  */
 unlock.register("sphere", async (req) => {
-  const f = new Figlet();
+  const options = {
+    font: "Isometric3",
+    horizontalLayout: "default",
+    verticalLayout: "default",
+    width: req.terminfo.width || 120,
+    whitespaceBreak: true,
+  };
+
+  const f = new Figlet(options);
   await f.init();
 
   const lines = [" The new", "way to", "  Cloud"];
 
+  let chalk;
   let filter;
   let rainbow;
   if (req.options && req.options.color && req.options.color === "millions") {
+    chalk = new Chalk({ level: 3 });
     filter = Figlet.rainbowFilter;
     rainbow = gradient.rainbow;
   } else {
     // assume "256"
+    chalk = new Chalk({ level: 2 });
     filter = rainbow256;
     rainbow = rainbow256;
   }
@@ -153,8 +165,9 @@ unlock.register("sphere", async (req) => {
   return content + more.join("");
 });
 
+// https://ss64.com/bash/syntax-colors.html
 function rainbow256(s) {
-  // https://ss64.com/bash/syntax-colors.html
+  const chalk = new Chalk({ level: 2 });
   const red = 9; // Red (SYSTEM)
   const yellow = 220; // Gold1
   const blue = 69; // CornflowerBlue
