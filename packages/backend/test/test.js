@@ -16,6 +16,9 @@ url.pathname = join(url.pathname, "/api/unlock");
 async function getContent(url) {
   const data = {
     args: ["sphere"],
+    //    options: {
+    //      "color": "millions"
+    //    },
     terminfo: {
       istty: true,
       width: 120,

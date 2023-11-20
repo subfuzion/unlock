@@ -1,4 +1,5 @@
 import figlet from "figlet";
+export declare const DefaultOptions: figlet.Options;
 /**
  * @example
    const f = new Figlet();
@@ -19,7 +20,7 @@ export declare class Figlet {
     /**
      * Transforms string to printable string based on this font, font height,
      * and terminal width.
-     * @param {string} s
+     * @param {string | string[]} s
      * @return {Promise<string>}
      */
     render(s: string | string[], filter?: (s: string) => string): Promise<string>;

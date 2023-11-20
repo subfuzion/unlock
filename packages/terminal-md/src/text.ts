@@ -2,7 +2,7 @@ import figlet from "figlet";
 import gradient from "gradient-string";
 import { stdout } from "node:process";
 
-const DefaultOptions: figlet.Options = {
+export const DefaultOptions: figlet.Options = {
   font: "Isometric3",
   horizontalLayout: "default",
   verticalLayout: "default",
@@ -61,7 +61,7 @@ export class Figlet {
   /**
    * Transforms string to printable string based on this font, font height,
    * and terminal width.
-   * @param {string} s
+   * @param {string | string[]} s
    * @return {Promise<string>}
    */
   async render(

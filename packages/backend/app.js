@@ -22,7 +22,7 @@ app.head("/api/unlock", (req, res) => {
 
 app.post("/api/unlock", async (req, res) => {
   try {
-    const result = await unlock(req.body);
+    const result = await unlock.handle(req.body);
     res.send(result);
   } catch (err) {
     console.error(req.url, "error:", err.message);

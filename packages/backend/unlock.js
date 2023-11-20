@@ -1,4 +1,6 @@
-import { FileReader, parse, render } from "@subfuzion/terminal-md";
+import { Figlet, FileReader, parse, render } from "@subfuzion/terminal-md";
+import chalk from "chalk";
+import gradient from "gradient-string";
 
 /**
  * Terminal properties spec
@@ -27,24 +29,6 @@ import { FileReader, parse, render } from "@subfuzion/terminal-md";
  * @param  {UnlockRequest} request
  * @return {Promise<UnlockResponse>}
  */
-export async function unlock(request) {
-  const name = request.args[0];
-  let contentType = "ascii";
-
-  // TODO: placeholder until we can look this up
-  const contentMap = new Map();
-  contentMap.set("sphere", "ascii");
-
-  if (contentMap.has(name)) {
-    contentType = contentMap.get(name);
-  }
-
-  const content = await getContent(name, contentType);
-  return {
-    code: 200,
-    content: content,
-  };
-}
 
 /**
  * Fetches the named content.
@@ -81,4 +65,110 @@ async function getAscii(name) {
   const dir = new URL("content", import.meta.url);
   const reader = new FileReader(dir);
   return reader.readFileExt(name, "ascii");
+}
+
+/**
+ * An Unlock handler.
+ * @callback UnlockHandler
+ * @param {UnlockRequest} request
+ * @return {Promise<string>}
+ */
+
+class Unlock {
+  handlers = new Map();
+
+  /**
+   * Registers a handler for the resource.
+   * @param {string} name The resource to return.
+   * @param {UnlockHandler} handler Handles the request and returns a resource.
+   */
+  register(name, handler) {
+    this.handlers.set(name, handler);
+  }
+
+  /**
+   *
+   * @param request
+   * @return {Promise<UnlockResponse>}
+   */
+  async handle(request) {
+    const name = request.args[0];
+    const handler = this.handlers.get(name);
+    if (!handler) {
+      throw new Error(`[unlock] No handler for resource: ${name}`);
+    }
+    const content = await handler(request);
+    return {
+      code: 200,
+      content: content,
+    };
+  }
+}
+
+export const unlock = new Unlock();
+
+/**
+ * @param {string} name
+ * @param {UnlockHandler} req
+ */
+unlock.register("sphere", async (req) => {
+  const f = new Figlet();
+  await f.init();
+
+  const lines = [" The new", "way to", "  Cloud"];
+
+  let filter;
+  let rainbow;
+  if (req.options && req.options.color && req.options.color === "millions") {
+    filter = Figlet.rainbowFilter;
+    rainbow = gradient.rainbow;
+  } else {
+    // assume "256"
+    filter = rainbow256;
+    rainbow = rainbow256;
+  }
+
+  const content = await f.render(lines, filter);
+
+  // const white = chalk.whiteBright;
+  const gray = chalk.gray;
+  const blue = chalk.blueBright;
+
+  const more = [
+    "\n\n\n",
+    "Let's build cool stuff at Google Cloud Next '24\n",
+    "Las Vegas, April 9-11\n",
+    "\n",
+    "Visit " +
+      blue("g.co/cloud/next") +
+      " and use registration code " +
+      rainbow("next100_dh1000\n"),
+    "to snag a $499 ticket\n",
+    "\n",
+    gray("*\n"),
+    gray("The $499 price is only valid with code next100_dh1000\n"),
+    gray("through 11:59 pm PT on December 31, 2023, or until sold out.\n"),
+  ];
+
+  return content + more.join("");
+});
+
+function rainbow256(s) {
+  // https://ss64.com/bash/syntax-colors.html
+  const red = 9; // Red (SYSTEM)
+  const yellow = 220; // Gold1
+  const blue = 69; // CornflowerBlue
+  const green = 34; // Green3
+
+  const colors = [red, yellow, green, blue];
+  const nColors = colors.length;
+
+  return s
+    .split("")
+    .map((c, i) => {
+      const color = colors[i % nColors];
+      // return chalk[color](c);
+      return chalk.ansi256(color)(c);
+    })
+    .join("");
 }
