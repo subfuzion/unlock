@@ -1,7 +1,7 @@
 {
   "name": "@subfuzion/terminal-md",
   "description": "Render markdown for terminals",
-  "version": "0.1.0-preview.15",
+  "version": "0.1.0-preview.16",
   "license": "Apache-2.0",
   "type": "module",
   "main": "./dist/index.js",
@@ -9,28 +9,28 @@
     "md2ascii": "./bin/md2ascii"
   },
   "files": [
-    "dist/src/**.*"
+    "dist/**.*"
   ],
-  "types": "./types/src/index.d.ts",
+  "types": "./types/index.d.ts",
   "typesVersions": {
     "*": {
-      "dist/src/index.d.ts": [
-        "dist/src/index.d.ts"
+      "dist/index.d.ts": [
+        "dist/index.d.ts"
       ],
       "*": [
-        "dist/src/*"
+        "dist/*"
       ]
     }
   },
   "exports": {
-    ".": "./dist/src/index.js"
+    ".": "./dist/index.js"
   },
   "scripts": {
-    "clean": "rimraf dist",
+    "clean": "rimraf dist types",
     "check": "prettier --check .",
     "prebuild": "npm run check && npm run clean",
-    "build": "tsc",
-    "watch": "tsc --watch",
+    "build": "tsc -p tsconfig.build.json",
+    "dev": "npm run build -- --watch",
     "lint": "eslint .",
     "fix": "prettier --write .",
     "test": "node --no-warnings=ExperimentalWarning --loader ts-node/esm test/test.ts",
